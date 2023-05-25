@@ -3,7 +3,6 @@ import time
 from threading import Thread
 
 import yaml
-from autotraders import session as s
 from autotraders.agent import Agent
 from autotraders.ship import Ship
 
@@ -58,7 +57,7 @@ class File:
         self.triggers = [Trigger(d, data["triggers"][d]) for d in data["triggers"]]
 
     def run(self, session):
-        logging.info("Initializing state ...")  # TODO: Tech Debt on threads (use logging instead)
+        logging.info("Initializing state ...")
         agent = Agent(session)
         logging.info("Agent: " + agent.symbol)
         ships = {}
@@ -72,9 +71,9 @@ class File:
             thread = Thread(target=on_start.run, name="on_start", args=(ships, self.events, session))
             thread.start()
         while True:
-            logging.info("Checking triggers ...")
+            logging.debug("Checking triggers ...")
             # agent.update()
-            time.sleep(5)  # TODO: Actually check triggers
+            time.sleep(10)  # TODO: Actually check triggers
 
 
 def load_text(stream):

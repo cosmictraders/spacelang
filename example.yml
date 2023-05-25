@@ -6,7 +6,8 @@ actions: # actions are per ship
   mine: # Definition of the action "mine"
     steps:
       - orbit
-      - extract
+      - extract:
+          fail-fast: false
       - dock
       - navigate:
           destination:
@@ -27,7 +28,6 @@ triggers:
         - navigate:
             destination:
               type: "ASTEROID_FIELD"
-        - orbit
         - action: # Execute the action named "mine"
             name: mine
             repeat:
