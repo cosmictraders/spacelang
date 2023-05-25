@@ -1,3 +1,4 @@
+import logging
 import time
 from threading import Thread
 
@@ -35,10 +36,14 @@ class Trigger:
         self.name = name  # TODO: Concurrency support
         self.steps = {}
         for group in data:
-            self.steps[group] = [Step(d, data[group]["steps"][d]) for d in data[group]["steps"]]
+            for d in data[group]["steps"]:
+                self.steps[group] = []
+                if type(d) == str:
+                    self.steps[group].append(Step(d, None)) # TODO: Move to step class
+                else:
+                    self.steps[group].append(Step(list(d.keys())[0], d[list(d.keys())[0]]))
 
     def run(self, ships, events, session):
-        print("[" + self.name + "] Executing")
         for group in self.steps:
             ship_group = ships[group]
             for ship in ship_group:
@@ -53,9 +58,9 @@ class File:
         self.triggers = [Trigger(d, data["triggers"][d]) for d in data["triggers"]]
 
     def run(self, session):
-        print("[main] Initializing state ...")  # TODO: Tech Debt on threads (use logging instead)
+        logging.info("Initializing state ...")  # TODO: Tech Debt on threads (use logging instead)
         agent = Agent(session)
-        print("[main] Agent: " + agent.symbol)
+        logging.info("Agent: " + agent.symbol)
         ships = {}
         for group in self.ship_groups:
             ships[group] = [Ship(ship, session) for ship in self.ship_groups[group]]
@@ -63,19 +68,15 @@ class File:
         contains_onstart = len([trigger for trigger in self.triggers if trigger.name == "on_start"]) == 1
         if contains_onstart:
             on_start = [trigger for trigger in self.triggers if trigger.name == "on_start"][0]
-            print("[main] Processing trigger on_start")
-            thread = Thread(target=on_start.run, args=(ships, self.events, session))
+            logging.info("Processing trigger on_start")
+            thread = Thread(target=on_start.run, name="on_start", args=(ships, self.events, session))
             thread.start()
         while True:
-            print("[main] Checking triggers ...")
-            agent.update()
+            logging.info("Checking triggers ...")
+            # agent.update()
             time.sleep(5)  # TODO: Actually check triggers
 
 
 def load_text(stream):
     data = yaml.load(stream, Loader=yaml.Loader)
     return data
-
-
-if __name__ == "__main__":
-    File(load_text(open("example.yml"))).run(s.get_session(secret.TOKEN))

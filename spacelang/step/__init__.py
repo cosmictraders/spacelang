@@ -1,3 +1,4 @@
+import logging
 import math
 import time
 from datetime import datetime, timezone
@@ -15,7 +16,7 @@ class Step:
         if type(self.args["destination"]) is str:
             ship.navigate(self.command)
         else:
-            choices = Waypoint.all(ship.nav.location.system, session)
+            choices, _ = Waypoint.all(ship.nav.location.system, session)
             ship_current_waypoint = [choice for choice in choices if choice.symbol == ship.nav.location][0]
             tmp = []
             for choice in choices:
@@ -72,6 +73,7 @@ class Step:
                     event.execute(ship, events, session)
 
     def execute(self, ship: Ship, events, session):
+        logging.debug(self.command)
         if self.command == "navigate":
             self.navigate(ship, session)
         elif self.command == "action":

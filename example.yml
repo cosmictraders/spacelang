@@ -25,13 +25,13 @@ triggers:
       concurrent: true # Run the actions for each ship at the same time (default is one after another)
       steps: # what to perform to each ship
         - navigate:
-          destination:
-            type: "ASTEROID_FIELD"
+            destination:
+              type: "ASTEROID_FIELD"
         - orbit
         - action: # Execute the action named "mine"
-          name: mine
-          repeat:
-            interval: 68 # interval in seconds
+            name: mine
+            repeat:
+              interval: 68 # interval in seconds
 
 #  condition:
 #    type: greater
