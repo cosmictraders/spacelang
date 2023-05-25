@@ -10,12 +10,12 @@ actions: # actions are per ship
       - extract
       - dock:
           test: true
-      - move:
+      - navigate:
           destination:
             trait: "MARKETPLACE"
       - refuel
       - sellall
-      - move:
+      - navigate:
           destination:
             type: "ASTEROID_FIELD"
       - refuel
@@ -25,7 +25,7 @@ triggers:
     mining: # specifies that the ship group "mining" is to be controlled
       concurrent: true # Run each ship at the same time (default one after another)
       steps: # what to perform to each ship
-        move:
+        navigate:
           destination:
             type: "ASTEROID_FIELD"
         action: # Execute the action named "mine"

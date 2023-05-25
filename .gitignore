@@ -4,8 +4,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
 
 # Distribution / packaging
 .Python
@@ -51,9 +49,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-
-# Sphinx documentation
-docs/_build/
 
 # Celery stuff
 celerybeat-schedule
