@@ -10,6 +10,7 @@ Welcome to Spacelang's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   structure
 
 
 

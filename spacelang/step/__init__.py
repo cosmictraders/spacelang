@@ -93,9 +93,13 @@ class Step:
             assert type(self.args) is dict
             ship.buy(self.args["symbol"], self.args.get("quantity", 1))
         elif self.command == "sellall":
+            exclude = []
+            if type(self.args) is dict and "exclude" in self.args:
+                exclude = self.args["exclude"]
             for i in ship.cargo.inventory:
-                ship.sell(i, ship.cargo.inventory[i])
-                time.sleep(0.1)
+                if i not in exclude:
+                    ship.sell(i, ship.cargo.inventory[i])
+                    time.sleep(0.1)
         elif self.command == "sleep":
             if type(self.args) is int:
                 time.sleep(self.args)
