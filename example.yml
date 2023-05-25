@@ -31,7 +31,7 @@ triggers:
         action: # Execute the action named "mine"
           name: mine
           repeat:
-            interval: 70 # interval in seconds
+            interval: 68 # interval in seconds
 
 #  condition:
 #    type: greater
