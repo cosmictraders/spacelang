@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spacelang"
+version = "0.0.0"
+authors = [
+  { name="Ashwin Naren", email="arihant2math@gmail.com" },
+]
+description = "A spacetraders automation language"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "autotraders >= 1.1",
+    "pyyaml >= 6.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["spacelang*"]
+exclude = ["source*", "tests*", "venv*"]
+
+[project.urls]
+"Homepage" = "https://arihant2math.github.io/spacelang/"
+"Documentation" = "https://arihant2math.github.io/spacelang/"
+"Bug Tracker" = "https://github.com/arihant2math/spacelang/issues"

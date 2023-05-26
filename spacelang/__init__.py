@@ -38,7 +38,7 @@ class Trigger:
             for d in data[group]["steps"]:
                 self.steps[group] = []
                 if type(d) == str:
-                    self.steps[group].append(Step(d, None)) # TODO: Move to step class
+                    self.steps[group].append(Step(d, None))  # TODO: Move to step class
                 else:
                     self.steps[group].append(Step(list(d.keys())[0], d[list(d.keys())[0]]))
 
@@ -68,7 +68,7 @@ class File:
         if contains_onstart:
             on_start = [trigger for trigger in self.triggers if trigger.name == "on_start"][0]
             logging.info("Processing trigger on_start")
-            thread = Thread(target=on_start.run, name="on_start", args=(ships, self.events, session))
+            thread = Thread(target=on_start.run, name="OnStart", args=(ships, self.events, session))
             thread.start()
         while True:
             logging.debug("Checking triggers ...")
@@ -79,3 +79,8 @@ class File:
 def load_text(stream):
     data = yaml.load(stream, Loader=yaml.Loader)
     return data
+
+
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.basicConfig(format='[%(threadName)s] %(levelname)s: %(message)s', level=logging.DEBUG)
