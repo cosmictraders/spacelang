@@ -54,5 +54,5 @@ class Navigate:
         if str(accepted.symbol) != str(ship.nav.location):
             ship.navigate(str(accepted.symbol))
         ship.update()
-        if ship.nav.status == "IN_TRANSIT":
+        if ship.nav.moving:
             time.sleep((ship.nav.route.arrival - datetime.now(timezone.utc)).seconds)

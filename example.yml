@@ -8,7 +8,6 @@ actions: # actions are per ship
       - orbit
       - extract:
           fail-fast: false
-      - dock
       - navigate:
           destination:
             trait: "MARKETPLACE"

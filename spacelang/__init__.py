@@ -80,4 +80,5 @@ def load_text(stream):
 
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getLogger("pyrate_limiter").setLevel(logging.WARNING)
 logging.basicConfig(format='[%(threadName)s] %(levelname)s: %(message)s', level=logging.DEBUG)

@@ -22,12 +22,12 @@ class ShipCommand:
                 if self.fail_fast:
                     raise e
                 else:
-                    logging.warning(self.command + " failed to execute")
+                    logging.warning(self.command + " failed to execute, " + str(e))
         elif self.command == "extract":
             try:
-                ship.refuel()
+                ship.extract()
             except IOError as e:
                 if self.fail_fast:
                     raise e
                 else:
-                    logging.warning(self.command + " failed to execute")
+                    logging.warning(self.command + " failed to execute, " + str(e))
