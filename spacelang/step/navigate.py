@@ -53,7 +53,6 @@ class Navigate:
         accepted = self.query.query(ship, session)
         if str(accepted.symbol) != str(ship.nav.location):
             ship.navigate(str(accepted.symbol))
-        time.sleep(1)
         ship.update()
         if ship.nav.status == "IN_TRANSIT":
             time.sleep((ship.nav.route.arrival - datetime.now(timezone.utc)).seconds)

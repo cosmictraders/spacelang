@@ -6,7 +6,6 @@ import yaml
 from autotraders.agent import Agent
 from autotraders.ship import Ship
 
-import secret
 from spacelang.step import Step
 
 
@@ -27,7 +26,6 @@ class Action:
     def run(self, ships, events, session):
         for ship in ships:
             self.execute(ship, events, session)
-            time.sleep(1)
 
 
 class Trigger:
@@ -63,7 +61,6 @@ class File:
         ships = {}
         for group in self.ship_groups:
             ships[group] = [Ship(ship, session) for ship in self.ship_groups[group]]
-            time.sleep(0.5)
         contains_onstart = len([trigger for trigger in self.triggers if trigger.name == "on_start"]) == 1
         if contains_onstart:
             on_start = [trigger for trigger in self.triggers if trigger.name == "on_start"][0]
@@ -72,7 +69,7 @@ class File:
             thread.start()
         while True:
             logging.debug("Checking triggers ...")
-            # agent.update()
+            agent.update()
             time.sleep(10)  # TODO: Actually check triggers
 
 

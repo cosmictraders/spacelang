@@ -58,7 +58,6 @@ class Step:
             for i in ship.cargo.inventory:
                 if i not in exclude:
                     ship.sell(i, ship.cargo.inventory[i])
-                    time.sleep(0.1)
         elif self.command == "sleep":
             if type(self.args) is int:
                 time.sleep(self.args)
@@ -66,4 +65,3 @@ class Step:
                 raise NotImplementedError("TODO")
         else:
             raise NotImplementedError("TODO")
-        time.sleep(1)
