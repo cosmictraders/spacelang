@@ -15,7 +15,7 @@ class Step:
         elif self.command in ["dock", "orbit", "refuel", "extract"]:
             self.inner = ShipCommand(self.command, self.args)
 
-    def action(self, ship, events, session):
+    def event(self, ship, events, session):
         repeat_interval = -1
         if type(self.args) is str:
             name = self.args
@@ -41,8 +41,8 @@ class Step:
             self.inner.execute(ship, session)
         elif self.command in ["dock", "orbit", "refuel", "extract"]:
             self.inner.execute(ship)
-        elif self.command == "action":
-            self.action(ship, events, session)
+        elif self.command == "action" or self.command == "event":
+            self.event(ship, events, session)
         elif self.command == "refine":
             ship.refine(self.args)
         elif self.command == "sell":
