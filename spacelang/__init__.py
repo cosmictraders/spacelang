@@ -38,7 +38,9 @@ class Trigger:
                 if type(d) == str:
                     self.steps[group].append(Step(d, None))  # TODO: Move to step class
                 else:
-                    self.steps[group].append(Step(list(d.keys())[0], d[list(d.keys())[0]]))
+                    self.steps[group].append(
+                        Step(list(d.keys())[0], d[list(d.keys())[0]])
+                    )
 
     def run(self, ships, events, session):
         for group in self.steps:
@@ -61,11 +63,18 @@ class File:
         ships = {}
         for group in self.ship_groups:
             ships[group] = [Ship(ship, session) for ship in self.ship_groups[group]]
-        contains_onstart = len([trigger for trigger in self.triggers if trigger.name == "on_start"]) == 1
+        contains_onstart = (
+            len([trigger for trigger in self.triggers if trigger.name == "on_start"])
+            == 1
+        )
         if contains_onstart:
-            on_start = [trigger for trigger in self.triggers if trigger.name == "on_start"][0]
+            on_start = [
+                trigger for trigger in self.triggers if trigger.name == "on_start"
+            ][0]
             logging.info("Processing trigger on_start")
-            thread = Thread(target=on_start.run, name="OnStart", args=(ships, self.events, session))
+            thread = Thread(
+                target=on_start.run, name="OnStart", args=(ships, self.events, session)
+            )
             thread.start()
         while True:
             logging.debug("Checking triggers ...")
@@ -81,4 +90,6 @@ def load_text(stream):
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("pyrate_limiter").setLevel(logging.WARNING)
-logging.basicConfig(format='[%(threadName)s] %(levelname)s: %(message)s', level=logging.DEBUG)
+logging.basicConfig(
+    format="[%(threadName)s] %(levelname)s: %(message)s", level=logging.DEBUG
+)

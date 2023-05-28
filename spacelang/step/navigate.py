@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from autotraders.map.waypoint import Waypoint
 
+
 class WaypointQuery:
     def __init__(self, args):
         self.data = args
@@ -13,12 +14,22 @@ class WaypointQuery:
             return self.data["destination"]
         else:
             choices, _ = Waypoint.all(ship.nav.location.system, session)
-            ship_current_waypoint = [choice for choice in choices if choice.symbol == ship.nav.location][0]
+            ship_current_waypoint = [
+                choice for choice in choices if choice.symbol == ship.nav.location
+            ][0]
             tmp = []
             for choice in choices:
                 if "trait" in self.data["destination"]:
-                    if len([trait for trait in choice.traits if
-                            trait.symbol == self.data["destination"]["trait"]]) != 0:
+                    if (
+                        len(
+                            [
+                                trait
+                                for trait in choice.traits
+                                if trait.symbol == self.data["destination"]["trait"]
+                            ]
+                        )
+                        != 0
+                    ):
                         tmp.append(choice)
                 if "type" in self.data["destination"]:
                     if choice.waypoint_type == self.data["destination"]["type"]:
@@ -26,8 +37,10 @@ class WaypointQuery:
             choices = tmp
             if len(choices) == 0:
                 raise Exception("0 possible waypoints")
-            if "selection" not in self.data["destination"] or self.data["destination"][
-                "selection"] == "NEAREST":
+            if (
+                "selection" not in self.data["destination"]
+                or self.data["destination"]["selection"] == "NEAREST"
+            ):
                 accepted = choices[0]
                 best = 1000000
                 for choice in choices:
@@ -35,7 +48,9 @@ class WaypointQuery:
                         accepted = choice
                         best = -1
                     distance = math.sqrt(
-                        ((choice.x - ship_current_waypoint.x) ** 2) + ((choice.y - ship_current_waypoint.y) ** 2))
+                        ((choice.x - ship_current_waypoint.x) ** 2)
+                        + ((choice.y - ship_current_waypoint.y) ** 2)
+                    )
                     if distance < best:
                         best = distance
                         accepted = choice

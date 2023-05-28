@@ -1,5 +1,6 @@
 ships:
   mining:
+    - "STARSTAR-1"
     - "STARSTAR-2"
 
 actions: # actions are per ship
