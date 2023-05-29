@@ -7,8 +7,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "Spacelang"
-copyright = "2023, Ashwin Naren"
-author = "Ashwin Naren"
+copyright = "2023, cosmictraders"
+author = "cosmictraders"
 release = "ALPHA"
 
 # -- General configuration ---------------------------------------------------
